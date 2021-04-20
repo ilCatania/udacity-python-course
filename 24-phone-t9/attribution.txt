@@ -1,0 +1,8 @@
+Attribution
+
+The data set originally comes from Google's NGram project[1], released under CC BY 3.0[2]. Specifically, we're using the 1-grams of version 20090715.
+
+
+[1] https://storage.googleapis.com/books/ngrams/books/datasetsv3.html
+[2] https://creativecommons.org/licenses/by/3.0/
+
