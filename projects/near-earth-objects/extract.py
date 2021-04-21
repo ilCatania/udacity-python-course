@@ -13,26 +13,46 @@ line, and uses the resulting collections to build an `NEODatabase`.
 You'll edit this file in Task 2.
 """
 import csv
+import helpers
 import json
+import math
 
 from models import NearEarthObject, CloseApproach
 
 
-def load_neos(neo_csv_path):
+def load_neos(neo_csv_path="data/neos.csv"):
     """Read near-Earth object information from a CSV file.
 
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
     :return: A collection of `NearEarthObject`s.
     """
-    # TODO: Load NEO data from the given CSV file.
-    return ()
+    neos = []
+    with open(neo_csv_path) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            diameter = float(row["diameter"]) if row["diameter"] else math.nan
+            hazardous = bool(row["pha"])
+            neos.append(NearEarthObject(row["pdes"], row["name"], diameter, hazardous))
+
+    return neos
 
 
-def load_approaches(cad_json_path):
+def load_approaches(cad_json_path="data/cad.json"):
     """Read close approach data from a JSON file.
 
-    :param neo_csv_path: A path to a JSON file containing data about close approaches.
+    :param cad_json_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-    # TODO: Load close approach data from the given JSON file.
-    return ()
+
+    required_fields = ("des", "cd", "dist", "v_rel")
+    cas = []
+    with open(cad_json_path) as f:
+        js = json.load(f)
+        field_indices = {field_name: js["fields"].index(field_name) for field_name in required_fields}
+        for row in js["data"]:
+            data = {field_name: row[field_idx] for field_name, field_idx in field_indices.items()}
+            approach_time = helpers.cd_to_datetime(data["cd"])
+            approach_dist = float(data["dist"])
+            approach_velocity = float(data["v_rel"])
+            cas.append(CloseApproach(data["des"], approach_time, approach_dist, approach_velocity))
+    return cas
