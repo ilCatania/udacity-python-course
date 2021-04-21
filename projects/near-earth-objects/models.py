@@ -17,6 +17,8 @@ quirks of the data set, such as missing names and unknown diameters.
 
 You'll edit this file in Task 1.
 """
+from datetime import datetime
+
 import helpers
 import math
 
@@ -82,20 +84,19 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
-    def __init__(self, designation: str, datetime_str: str, distance: float, velocity: float):
+    def __init__(self, designation: str, time: datetime, distance: float, velocity: float):
         """Create a new `CloseApproach`.
 
         :param designation: the designation of the NearEarthObject` that is making a
                             close approach to Earth.
-        :param datetime_str: The date and time string, in UTC, at which the NEO passes
-                             closest to Earth.
+        :param time: The date and time, in UTC, at which the NEO passes closest to Earth.
         :param distance: The nominal approach distance, in astronomical units, of the NEO
                          to Earth at the closest point.
         :param velocity: The velocity, in kilometers per second, of the NEO relative to
                          Earth at the closest point.
         """
         self._designation = designation
-        self.time = helpers.cd_to_datetime(datetime_str)
+        self.time = time
         self.distance = distance
         self.velocity = velocity
 
