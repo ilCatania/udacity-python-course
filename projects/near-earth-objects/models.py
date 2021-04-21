@@ -63,7 +63,7 @@ class NearEarthObject:
         else:
             diameter_str = "an unknown diameter"
         hazardous_str = "potentially hazardous" if self.hazardous else "not potentially hazardous"
-        return f"NEO {self.fullname} has {diameter_str} and is {hazardous_str}"
+        return f"NEO {self.fullname} has {diameter_str} and is {hazardous_str}."
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
