@@ -31,8 +31,9 @@ def load_neos(neo_csv_path="data/neos.csv"):
         reader = csv.DictReader(f)
         for row in reader:
             diameter = float(row["diameter"]) if row["diameter"] else math.nan
-            hazardous = bool(row["pha"])
-            neos.append(NearEarthObject(row["pdes"], row["name"], diameter, hazardous))
+            hazardous = row["pha"] == "Y"
+            name = row["name"] or None
+            neos.append(NearEarthObject(row["pdes"], name, diameter, hazardous))
 
     return neos
 
