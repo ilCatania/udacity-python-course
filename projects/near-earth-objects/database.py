@@ -11,7 +11,7 @@ data on NEOs and close approaches extracted by `extract.load_neos` and
 
 You'll edit this file in Tasks 2 and 3.
 """
-
+from models import CloseApproach, NearEarthObject
 class NEODatabase:
     """A database of near-Earth objects and their close approaches.
 
@@ -41,11 +41,20 @@ class NEODatabase:
         self._neos = neos
         self._approaches = approaches
 
-        # TODO: What additional auxiliary data structures will be useful?
+        # store designation to index and name to index mappings
+        self._neo_idx_by_designation = {}
+        self._neo_idx_by_name = {}
+        for idx, neo in enumerate(neos):
+            self._neo_idx_by_designation[neo.designation] = idx  # TODO check dupes?
+            if neo.name:
+                self._neo_idx_by_name[neo.name] = idx  # TODO check dupes?
 
-        # TODO: Link together the NEOs and their close approaches.
+        for a in self._approaches:
+            a.neo = self.get_neo_by_designation(a._designation)
+            if a.neo:
+                a.neo.approaches.append(a)
 
-    def get_neo_by_designation(self, designation):
+    def get_neo_by_designation(self, designation: str) -> NearEarthObject:
         """Find and return an NEO by its primary designation.
 
         If no match is found, return `None` instead.
@@ -58,10 +67,10 @@ class NEODatabase:
         :param designation: The primary designation of the NEO to search for.
         :return: The `NearEarthObject` with the desired primary designation, or `None`.
         """
-        # TODO: Fetch an NEO by its primary designation.
-        return None
+        idx = self._neo_idx_by_designation.get(designation, -1)
+        return self._neos[idx] if idx >= 0 else None
 
-    def get_neo_by_name(self, name):
+    def get_neo_by_name(self, name: str) -> NearEarthObject:
         """Find and return an NEO by its name.
 
         If no match is found, return `None` instead.
@@ -75,8 +84,8 @@ class NEODatabase:
         :param name: The name, as a string, of the NEO to search for.
         :return: The `NearEarthObject` with the desired name, or `None`.
         """
-        # TODO: Fetch an NEO by its name.
-        return None
+        idx = self._neo_idx_by_name.get(name, -1)
+        return self._neos[idx] if idx >= 0 else None
 
     def query(self, filters=()):
         """Query close approaches to generate those that match a collection of filters.
@@ -87,7 +96,7 @@ class NEODatabase:
         If no arguments are provided, generate all known close approaches.
 
         The `CloseApproach` objects are generated in internal order, which isn't
-        guaranteed to be sorted meaninfully, although is often sorted by time.
+        guaranteed to be sorted meaningfully, although is often sorted by time.
 
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
