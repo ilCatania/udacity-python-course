@@ -102,7 +102,6 @@ class DateFilter(InequalityFilter):
     @classmethod
     def get(cls, approach: CloseApproach):
         """Return the approach date."""
-        # TODO check if worth storing the date on the approach to avoid recomputing
         return approach.time.date()
 
 
