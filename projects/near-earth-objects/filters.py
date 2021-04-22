@@ -78,14 +78,12 @@ class AttributeFilter:
         return cls(operator.eq, value)
 
     def __repr__(self):
+        """Machine readable representation."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
 class InequalityFilter(AttributeFilter):
-    """
-    Subclass of `AttributeFilter` that provides factory methods to ease creation
-    of filters comparing values that support inequality filters (`ge`, `lt`, etc).
-    """
+    """Subclass of `AttributeFilter` with shortcut support for inequality filters (`ge`, `lt`, etc)."""
 
     @classmethod
     def le(cls, value):
@@ -103,6 +101,7 @@ class DateFilter(InequalityFilter):
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Return the approach date."""
         # TODO check if worth storing the date on the approach to avoid recomputing
         return approach.time.date()
 
@@ -112,6 +111,7 @@ class DistanceFilter(InequalityFilter):
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Return the approach distance."""
         return approach.distance
 
 
@@ -120,6 +120,7 @@ class VelocityFilter(InequalityFilter):
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Return the approach velocity."""
         return approach.velocity
 
 
@@ -128,6 +129,7 @@ class DiameterFilter(InequalityFilter):
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Return the approaching `NearEarthObject`'s diameter."""
         return approach.neo.diameter
 
 
@@ -140,6 +142,7 @@ class HazardousFilter(AttributeFilter):
 
     @classmethod
     def get(cls, approach: CloseApproach):
+        """Return the approaching `NearEarthObject`'s hazard flag."""
         return approach.neo.hazardous
 
 

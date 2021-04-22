@@ -44,7 +44,6 @@ def load_approaches(cad_json_path="data/cad.json"):
     :param cad_json_path: A path to a JSON file containing data about close approaches.
     :return: A collection of `CloseApproach`es.
     """
-
     required_fields = ("des", "cd", "dist", "v_rel")
     cas = []
     with open(cad_json_path) as f:
