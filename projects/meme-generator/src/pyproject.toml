@@ -1,0 +1,11 @@
+[project]
+name = "meme_generator"
+version = "1.0.0"
+description = "Meme generator project for the Udacity Intermediate Python nanodegree."
+authors = ["Gabriele Catania gabriele.ctn@gmail.com"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/ilCatania/udacity-python-course/tree/master/projects/meme-generator"
+
+[build-system]
+requires = ["setuptools", "wheel"]
