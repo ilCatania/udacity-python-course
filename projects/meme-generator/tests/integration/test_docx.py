@@ -13,5 +13,11 @@ def test_parse():
         QuoteModel("Bark like no one’s listening", "Rex"),
         QuoteModel("RAWRGWAWGGR", "Chewy"),
         QuoteModel("Life is like peanut butter: crunchy", "Peanut"),
+<<<<<<< HEAD
         QuoteModel("Channel your inner husky", "Husky"),
     ]
+=======
+        QuoteModel("Channel your inner husky", "Tiny"),
+    ]
+    assert quotes == expected_quotes
+>>>>>>> add docx parser + integration test
