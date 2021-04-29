@@ -9,4 +9,3 @@ pyparsing==2.4.7
 pytest==6.2.3
 python-docx==0.8.10
 toml==0.10.2
--e git+git@github.com:ilCatania/udacity-python-course.git@752cade41db6fc7b0d0ec5a3a231e1eeb4596475#egg=UNKNOWN&subdirectory=projects/meme-generator/src
