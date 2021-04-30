@@ -26,13 +26,13 @@ $ source env/bin/activate
 
 ### Code and docstring linting
 ```sh
-pip install flake8 flake8-docstrings
-flake8
+$ pip install flake8 flake8-docstrings
+$ flake8
 ```
 
 ### Download dependencies and run tests
 ```sh
-pip install -r requirements.txt
-pytest
+$ pip install -r requirements.txt
+$ pytest
 ```
 
