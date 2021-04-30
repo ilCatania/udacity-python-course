@@ -7,7 +7,8 @@ from typing import List
 import pytest
 
 
-class FakeIngestor(IngestorInterface):
+class FakeIngestor:
+    """Duck-typed fake ingestor for testing."""
 
     def __init__(self, ext: str):
         self.ext = ext
@@ -16,9 +17,7 @@ class FakeIngestor(IngestorInterface):
         return path.endswith(self.ext)
 
     def parse(self, path) -> List[QuoteModel]:
-        if self.can_ingest(path):
-            return [QuoteModel(f"Fake {self.ext} quote", self.ext)]
-        raise InvalidFileFormat
+        return [QuoteModel(f"Fake {self.ext} quote", self.ext)]
 
 
 @pytest.fixture(autouse=True)
