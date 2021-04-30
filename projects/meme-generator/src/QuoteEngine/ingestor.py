@@ -1,5 +1,6 @@
 import docx
 import os
+import pandas as pd
 import re
 import subprocess
 import tempfile
@@ -46,6 +47,20 @@ class TxtIngestor(IngestorInterface):
             raise InvalidFileFormat
         with open(path, "r", encoding="utf-8-sig") as f:
             return [QuoteModel(*line.strip().split(" - ")) for line in f if " - " in line]
+
+
+class CsvIngestor(IngestorInterface):
+    """Parse comma separated value files using pandas."""
+
+    ext = ".csv"
+
+    @classmethod
+    def parse(cls, path) -> List[QuoteModel]:
+        if not cls.can_ingest(path):
+            raise InvalidFileFormat
+        return pd.read_csv(path)\
+            .apply(lambda row: QuoteModel(row.body, row.author), axis=1)\
+            .tolist()
 
 
 class DocxIngestor(IngestorInterface):
