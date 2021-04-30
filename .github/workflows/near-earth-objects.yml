@@ -1,4 +1,4 @@
-name: Near Earth Objects
+name: Github actions build - Near Earth Objects
 
 on: [push]
 

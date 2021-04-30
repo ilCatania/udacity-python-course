@@ -1,3 +1,5 @@
+![Build](https://github.com/ilCatania/udacity-python-course/actions/workflows/near-earth-objects.yml/badge.svg)
+
 Near Earth Objects project
 ==========================
 

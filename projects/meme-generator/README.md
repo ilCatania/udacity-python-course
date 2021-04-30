@@ -1,3 +1,6 @@
+![Build](https://github.com/ilCatania/udacity-python-course/actions/workflows/meme-generator.yml/badge.svg)
+[![codecov](https://codecov.io/gh/ilCatania/udacity-python-course/branch/master/graph/badge.svg?token=6M9ZFBRIF2)](https://codecov.io/gh/ilCatania/udacity-python-course)
+
 Meme Generator project
 ======================
 
