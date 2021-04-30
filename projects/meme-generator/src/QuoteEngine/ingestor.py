@@ -122,3 +122,8 @@ class Ingestor(IngestorInterface):
     @classmethod
     def deregister(cls, ingestor: IngestorInterface):
         cls._ingestors.remove(ingestor)
+
+    @classmethod
+    def register_defaults(cls):
+        for ing in (CsvIngestor, DocxIngestor, PdfIngestor, TxtIngestor):
+            cls.register(ing)

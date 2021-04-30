@@ -1,7 +1,7 @@
 import os
 import random
-
-# @TODO Import your Ingestor and MemeEngine classes
+from QuoteEngine.ingestor import Ingestor
+from MemeGenerator.engine import MemeEngine
 
 
 def generate_meme(path=None, body=None, author=None):
@@ -24,6 +24,7 @@ def generate_meme(path=None, body=None, author=None):
                        './_data/DogQuotes/DogQuotesDOCX.docx',
                        './_data/DogQuotes/DogQuotesPDF.pdf',
                        './_data/DogQuotes/DogQuotesCSV.csv']
+        Ingestor.register_defaults()
         quotes = []
         for f in quote_files:
             quotes.extend(Ingestor.parse(f))
