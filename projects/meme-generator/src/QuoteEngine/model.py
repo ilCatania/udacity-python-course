@@ -5,3 +5,6 @@ from dataclasses import dataclass
 class QuoteModel:
     body: str
     author: str
+
+    def __str__(self):
+        return f'"{self.body}" - {self.author}'
