@@ -1,5 +1,6 @@
 import os
 import random
+from QuoteEngine.model import QuoteModel
 from QuoteEngine.ingestor import Ingestor
 from MemeGenerator.engine import MemeEngine
 
