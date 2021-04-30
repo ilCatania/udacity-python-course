@@ -96,3 +96,26 @@ class PdfIngestor(IngestorInterface):
                         for m in quote_regex.finditer(line)]
         finally:
             os.remove(tf)
+
+class Ingestor(IngestorInterface):
+
+    _ingestors = set()
+
+    @classmethod
+    def can_ingest(cls, path) -> bool:
+        return any(ing.can_ingest(path) for ing in cls._ingestors)
+
+    @classmethod
+    def parse(cls, path) -> List[QuoteModel]:
+        for ing in cls._ingestors:  #type: IngestorInterface
+            if ing.can_ingest(path):
+                return ing.parse(path)
+        raise InvalidFileFormat
+
+    @classmethod
+    def register(cls, ingestor: IngestorInterface):
+        cls._ingestors.add(ingestor)
+
+    @classmethod
+    def deregister(cls, ingestor: IngestorInterface):
+        cls._ingestors.remove(ingestor)
