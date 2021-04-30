@@ -57,11 +57,10 @@ class DocxIngestor(IngestorInterface):
     def parse(cls, path) -> List[QuoteModel]:
         if not cls.can_ingest(path):
             raise InvalidFileFormat
-        quotes = []
         doc = docx.Document(path)
-        for p in doc.paragraphs:
-            quotes.extend(QuoteModel(m[1], m[2]) for m in quote_regex.finditer(p.text))
-        return quotes
+        return [QuoteModel(m[1], m[2])
+                for p in doc.paragraphs
+                for m in quote_regex.finditer(p.text)]
 
 class PdfIngestor(IngestorInterface):
     """Parse PDF files using pdftotext via the command line."""
@@ -73,7 +72,6 @@ class PdfIngestor(IngestorInterface):
         if not cls.can_ingest(path):
             raise InvalidFileFormat
 
-        quotes = []
         _, tf = tempfile.mkstemp(suffix=cls.ext)
         try:
             subprocess.run(("pdftotext", path, tf), check=True)
