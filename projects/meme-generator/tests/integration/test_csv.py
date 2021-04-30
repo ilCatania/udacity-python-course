@@ -1,5 +1,8 @@
 from src.QuoteEngine.ingestor import CsvIngestor
+from src.QuoteEngine.ingestor import InvalidFileFormat
 from src.QuoteEngine.model import QuoteModel
+
+import pytest
 
 
 def test_can_ingest():
@@ -14,3 +17,5 @@ def test_parse():
         QuoteModel("When in doubt, go shoe-shopping", "Mr. Paws"),
     ]
     assert quotes == expected_quotes
+    with pytest.raises(InvalidFileFormat):
+        CsvIngestor.parse("/tmp/made_up_file.wav")

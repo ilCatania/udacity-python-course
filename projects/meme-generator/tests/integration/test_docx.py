@@ -1,5 +1,8 @@
 from src.QuoteEngine.ingestor import DocxIngestor
+from src.QuoteEngine.ingestor import InvalidFileFormat
 from src.QuoteEngine.model import QuoteModel
+
+import pytest
 
 
 def test_can_ingest():
@@ -16,3 +19,5 @@ def test_parse():
         QuoteModel("Channel your inner husky", "Tiny"),
     ]
     assert quotes == expected_quotes
+    with pytest.raises(InvalidFileFormat):
+        DocxIngestor.parse("/tmp/made_up_file.wav")

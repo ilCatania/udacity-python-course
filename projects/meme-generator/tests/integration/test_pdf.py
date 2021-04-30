@@ -1,5 +1,8 @@
+from src.QuoteEngine.ingestor import InvalidFileFormat
 from src.QuoteEngine.ingestor import PdfIngestor
 from src.QuoteEngine.model import QuoteModel
+
+import pytest
 
 
 def test_can_ingest():
@@ -15,3 +18,5 @@ def test_parse():
         QuoteModel("It's the size of the fight in the dog", "Bark Twain"),
     ]
     assert quotes == expected_quotes
+    with pytest.raises(InvalidFileFormat):
+        PdfIngestor.parse("/tmp/made_up_file.wav")
