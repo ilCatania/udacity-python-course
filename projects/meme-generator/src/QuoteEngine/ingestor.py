@@ -33,7 +33,7 @@ class IngestorInterface(ABC):
     def parse(cls, path) -> List[QuoteModel]:
         """Parse the input file, checking whether it's supported first."""
         if not cls.can_ingest(path):
-            raise InvalidFileFormat
+            raise InvalidFileFormat(path, cls)
         return cls._parse(path)
 
 
