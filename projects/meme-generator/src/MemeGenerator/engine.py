@@ -9,6 +9,8 @@ import tempfile
 class MemeEngine:
 
     text_margin = 2  # avoid the text sticking too close to the borders
+    default_font = "./src/_data/fonts/FreeSans.ttf"
+    default_font_size = 20
 
     def __init__(self, root):
         self.root = root
@@ -27,7 +29,8 @@ class MemeEngine:
 
         draw.text((text_x, text_y), str(quote), font=font)
 
-    def make_meme(self, img_path, text, author, width=500, font_name="FreeSans.ttf", font_size=20) -> str:
+    def make_meme(self, img_path, text, author, width=500,
+                  font_name=default_font, font_size=default_font_size) -> str:
         with Image.open(img_path) as img:  # type: Image
             if img.width > width:
                 new_height = int(img.height * width / img.width)
