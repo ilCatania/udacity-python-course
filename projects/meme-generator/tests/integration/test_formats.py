@@ -1,6 +1,6 @@
-from src.QuoteEngine.ingestor import InvalidFileFormat
-from src.QuoteEngine.ingestor import CsvIngestor, DocxIngestor, PdfIngestor, TxtIngestor, IngestorInterface
-from src.QuoteEngine.model import QuoteModel
+from QuoteEngine.ingestor import InvalidFileFormat
+from QuoteEngine.ingestor import CsvIngestor, DocxIngestor, PdfIngestor, TxtIngestor, IngestorInterface
+from QuoteEngine.model import QuoteModel
 
 import pytest
 

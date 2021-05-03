@@ -1,4 +1,4 @@
-from src.MemeGenerator.engine import MemeEngine
+from MemeGenerator.engine import MemeEngine
 from tempfile import TemporaryDirectory
 import random
 import filecmp

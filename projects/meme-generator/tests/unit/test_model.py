@@ -1,4 +1,4 @@
-from src.QuoteEngine.model import QuoteModel
+from QuoteEngine.model import QuoteModel
 
 
 def test_quote_str():

@@ -1,7 +1,6 @@
-from src.QuoteEngine.ingestor import Ingestor
-from src.QuoteEngine.ingestor import IngestorInterface
-from src.QuoteEngine.ingestor import InvalidFileFormat
-from src.QuoteEngine.model import QuoteModel
+from QuoteEngine.ingestor import Ingestor
+from QuoteEngine.ingestor import InvalidFileFormat
+from QuoteEngine.model import QuoteModel
 from typing import List
 
 import pytest
