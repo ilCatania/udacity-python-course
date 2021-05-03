@@ -13,3 +13,4 @@ python-docx==0.8.10
 requests==2.25.1
 toml==0.10.2
 urllib3==1.26.4
+-e .

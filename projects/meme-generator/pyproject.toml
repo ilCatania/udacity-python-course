@@ -8,4 +8,8 @@ readme = "README.md"
 repository = "https://github.com/ilCatania/udacity-python-course/tree/master/projects/meme-generator"
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+root = "../.."
