@@ -18,6 +18,7 @@ env/
 
 # Generated files
 .idea/**/contentModel.xml
+*.egg-info/
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
