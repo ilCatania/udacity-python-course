@@ -10,6 +10,7 @@ from os import PathLike
 import requests_mock
 import filecmp
 import operator
+from PIL import Image, ImageChops
 
 
 @pytest.fixture
@@ -36,7 +37,11 @@ def check_meme_image(client: FlaskClient, html: str, expected_img_file: PathLike
     assert img_response.content_type == "image/jpeg"
     with tempfile.NamedTemporaryFile(suffix=".jpg") as tf:
         tf.write(img_response.data)
-        assert filecmp.cmp(tf.name, f"./tests/_data/{expected_img_file}", shallow=False)
+        with Image.open(tf.name) as actual_img, Image.open(
+            f"./tests/_data/{expected_img_file}"
+        ) as expected_img:
+            img_diff = ImageChops.difference(actual_img, expected_img)
+            assert img_diff.getbbox() is None
 
 
 def test_homepage(client: FlaskClient, monkeypatch):
@@ -46,7 +51,7 @@ def test_homepage(client: FlaskClient, monkeypatch):
     fixed random seed.
     """
     random.seed(42)
-    monkeypatch.setattr(random, "choice", operator.itemgetter(0) )
+    monkeypatch.setattr(random, "choice", operator.itemgetter(0))
     response = client.get("/")
     html = get_html(response)
     assert "<title>Meme Generator</title>" in html
