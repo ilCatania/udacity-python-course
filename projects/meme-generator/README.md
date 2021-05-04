@@ -20,22 +20,30 @@ you found this `README`, unless otherwise specified.
 I will also assume you are developing under Linux (I
 used Ubuntu).
 
-### Set up a virtual environment (optional - recommended)
-
+* Set up a virtual environment (optional - recommended)
 ```sh
 $ python -m venv env
 $ source env/bin/activate
 ```
-
-### Code and docstring linting
+* Lint code and docstrings
 ```sh
 $ pip install flake8 flake8-docstrings
 $ flake8
 ```
-
-### Download dependencies and run tests
+* Download dependencies and run tests
 ```sh
 $ pip install -r requirements.txt
 $ pytest
 ```
+## How to run
 
+* Generate a meme on the command line
+```sh
+$ python3 src/meme.py
+```
+this will return the path to a generated meme image.
+* Run in your browser
+```sh
+$ ./run-app.sh
+```
+this will expose the web interface on `localhost:3000`.
