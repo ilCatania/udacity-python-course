@@ -1,3 +1,4 @@
+"""Quote import module."""
 import docx
 import os
 import pandas as pd
@@ -41,7 +42,7 @@ class IngestorInterface(ABC):
     @abstractmethod
     def _parse(cls, path) -> List[QuoteModel]:
         """Format-specific parsing logic goes here."""
-        raise NotImplemented
+        raise NotImplementedError
 
 
 class TxtIngestor(IngestorInterface):
@@ -51,7 +52,7 @@ class TxtIngestor(IngestorInterface):
 
     @classmethod
     def _parse(cls, path) -> List[QuoteModel]:
-        """Parsing logic."""
+        """Parse quotes from file."""
         with open(path, "r", encoding="utf-8-sig") as f:
             return [QuoteModel(*line.strip().split(" - ")) for line in f if " - " in line]
 
@@ -63,7 +64,7 @@ class CsvIngestor(IngestorInterface):
 
     @classmethod
     def _parse(cls, path) -> List[QuoteModel]:
-        """Parsing logic."""
+        """Parse quotes from file."""
         return (
             pd.read_csv(path).apply(lambda row: QuoteModel(row.body, row.author), axis=1).tolist()
         )
@@ -76,7 +77,7 @@ class DocxIngestor(IngestorInterface):
 
     @classmethod
     def _parse(cls, path) -> List[QuoteModel]:
-        """Parsing logic."""
+        """Parse quotes from file."""
         doc = docx.Document(path)
         return [
             QuoteModel(m[1], m[2]) for p in doc.paragraphs for m in quote_regex.finditer(p.text)
@@ -90,7 +91,7 @@ class PdfIngestor(IngestorInterface):
 
     @classmethod
     def _parse(cls, path) -> List[QuoteModel]:
-        """Parsing logic."""
+        """Parse quotes from file."""
         _, tf = tempfile.mkstemp(suffix=cls.ext)
         try:
             subprocess.run(("pdftotext", path, tf), check=True)
@@ -103,11 +104,17 @@ class PdfIngestor(IngestorInterface):
 
 
 class Ingestor(IngestorInterface):
+    """Main ingestor class supporting multiple types.
+
+    Supports registering new ingestors in order to support
+    additional file types.
+    """
 
     _ingestors = set()
 
     @classmethod
     def can_ingest(cls, path) -> bool:
+        """Return whether the input file is supported."""
         return any(ing.can_ingest(path) for ing in cls._ingestors)
 
     @classmethod
@@ -119,13 +126,16 @@ class Ingestor(IngestorInterface):
 
     @classmethod
     def register(cls, ingestor: IngestorInterface):
+        """Register a new ingestor type."""
         cls._ingestors.add(ingestor)
 
     @classmethod
     def deregister(cls, ingestor: IngestorInterface):
+        """Deregister an ingestor type."""
         cls._ingestors.remove(ingestor)
 
     @classmethod
     def register_defaults(cls):
+        """Register default ingestor types."""
         for ing in (CsvIngestor, DocxIngestor, PdfIngestor, TxtIngestor):
             cls.register(ing)

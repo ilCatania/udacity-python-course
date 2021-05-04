@@ -1,9 +1,10 @@
+"""Web app module."""
 import mimetypes
 import os
 import random
 import requests
 import tempfile
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, request
 from MemeGenerator.engine import MemeEngine
 from QuoteEngine.ingestor import Ingestor
 from pathlib import Path
@@ -15,8 +16,7 @@ meme = MemeEngine("./src/static")  # this is pretty ugly but wouldn't work other
 
 
 def setup():
-    """Load all resources"""
-
+    """Load all resources."""
     Ingestor.register_defaults()
     quotes_path = "./src/_data/DogQuotes"
     quotes = []
@@ -40,7 +40,7 @@ quotes, imgs = setup()
 
 @app.route("/")
 def meme_rand():
-    """Generate a random meme"""
+    """Generate a random meme."""
     img, quote = (random.choice(item) for item in (imgs, quotes))
     meme_path = meme.make_meme(img, quote.body, quote.author)
     meme_file_name = static / os.path.basename(meme_path)  # assumes memes are saved under ./static/
@@ -49,14 +49,13 @@ def meme_rand():
 
 @app.route("/create", methods=["GET"])
 def meme_form():
-    """User input for meme information"""
+    """Accept user input for meme information."""
     return render_template("meme_form.html")
 
 
 @app.route("/create", methods=["POST"])
 def meme_post():
-    """Create a user defined meme"""
-
+    """Create a user defined meme."""
     image_url = request.form.get("image_url")
     body = request.form.get("body")
     author = request.form.get("author")

@@ -1,3 +1,6 @@
 [flake8]
-exclude = .git,__pycache__,tests,env
+ignore =
+    # D104 Missing docstring in public package
+    D104,
+exclude = .git,__pycache__,tests,env,main.py
 max-line-length = 120

@@ -1,4 +1,5 @@
-from PIL import Image, ImageDraw, ImageFont
+"""Meme generator engine module."""
+from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
 from QuoteEngine.model import QuoteModel
 
 import os
@@ -7,12 +8,14 @@ import tempfile
 
 
 class MemeEngine:
+    """Meme generator engine."""
 
     text_margin = 2  # avoid the text sticking too close to the borders
     default_font = "./src/_data/fonts/FreeSans.ttf"
     default_font_size = 20
 
     def __init__(self, root):
+        """Initialize the engine."""
         self.root = root
         os.makedirs(root, exist_ok=True)
 
@@ -32,9 +35,10 @@ class MemeEngine:
     def make_meme(
         self, img_path, text, author, width=500, font_name=default_font, font_size=default_font_size
     ) -> str:
+        """Generate a meme from an image and a quote."""
         try:
             Image.open(img_path)
-        except:
+        except (FileNotFoundError, UnidentifiedImageError):
             raise ValueError(f"Unable to open: {os.path.abspath(img_path)}")
         with Image.open(img_path) as img:  # type: Image
             if img.width > width:
