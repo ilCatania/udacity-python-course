@@ -18,12 +18,7 @@ meme = MemeEngine("./src/static")  # this is pretty ugly but wouldn't work other
 def setup():
     """Load all resources."""
     Ingestor.register_defaults()
-    quotes_path = "./src/_data/DogQuotes"
-    quotes = []
-    for dir, _, files in os.walk(quotes_path):
-        for f in files:
-            if Ingestor.can_ingest(f):
-                quotes.extend(Ingestor.parse(Path(dir) / f))
+    quotes = Ingestor.scan("./src/_data/DogQuotes")
 
     images_path = "./src/_data/photos/dog/"
     imgs = [
