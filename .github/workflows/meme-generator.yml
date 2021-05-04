@@ -39,7 +39,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: pytest-results
-        path: junit/test-results.xml
+        path: ./**/meme-generator/junit/test-results.xml
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
     - name: Upload coverage to Codecov
