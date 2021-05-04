@@ -31,6 +31,10 @@ class MemeEngine:
 
     def make_meme(self, img_path, text, author, width=500,
                   font_name=default_font, font_size=default_font_size) -> str:
+        try:
+            Image.open(img_path)
+        except:
+            raise ValueError(f"Unable to open: {os.path.abspath(img_path)}")
         with Image.open(img_path) as img:  # type: Image
             if img.width > width:
                 new_height = int(img.height * width / img.width)
