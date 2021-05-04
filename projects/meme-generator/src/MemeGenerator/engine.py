@@ -37,16 +37,15 @@ class MemeEngine:
     ) -> str:
         """Generate a meme from an image and a quote."""
         try:
-            Image.open(img_path)
+            with Image.open(img_path) as img:  # type: Image
+                if img.width > width:
+                    new_height = int(img.height * width / img.width)
+                    resized = img.resize((width, new_height))
+                else:
+                    resized = img
+                self._write_quote(resized, QuoteModel(text, author), font_name, font_size)
+                _, tf = tempfile.mkstemp(dir=self.root, prefix="meme-", suffix=".jpg")
+                resized.save(tf)
         except (FileNotFoundError, UnidentifiedImageError):
             raise ValueError(f"Unable to open: {os.path.abspath(img_path)}")
-        with Image.open(img_path) as img:  # type: Image
-            if img.width > width:
-                new_height = int(img.height * width / img.width)
-                resized = img.resize((width, new_height))
-            else:
-                resized = img
-            self._write_quote(resized, QuoteModel(text, author), font_name, font_size)
-            _, tf = tempfile.mkstemp(dir=self.root, prefix="meme-", suffix=".jpg")
-            resized.save(tf)
         return tf
