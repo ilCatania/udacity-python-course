@@ -9,6 +9,7 @@ import re
 from os import PathLike
 import requests_mock
 import filecmp
+import operator
 
 
 @pytest.fixture
@@ -38,13 +39,14 @@ def check_meme_image(client: FlaskClient, html: str, expected_img_file: PathLike
         assert filecmp.cmp(tf.name, f"./tests/_data/{expected_img_file}", shallow=False)
 
 
-def test_homepage(client: FlaskClient):
+def test_homepage(client: FlaskClient, monkeypatch):
     """Test loading the home page.
 
     Compares the returned image with the expected one based on a
     fixed random seed.
     """
     random.seed(42)
+    monkeypatch.setattr(random, "choice", operator.itemgetter(0) )
     response = client.get("/")
     html = get_html(response)
     assert "<title>Meme Generator</title>" in html
