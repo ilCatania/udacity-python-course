@@ -2,10 +2,11 @@
 import argparse
 import os
 import random
-from QuoteEngine.model import QuoteModel
-from QuoteEngine.ingestor import Ingestor
-from MemeGenerator.engine import MemeEngine
 from pathlib import Path
+
+from MemeGenerator.engine import MemeEngine
+from QuoteEngine.ingestor import Ingestor
+from QuoteEngine.model import QuoteModel
 
 
 def generate_meme(path=None, body=None, author=None):

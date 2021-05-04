@@ -1,12 +1,13 @@
 """Quote import module."""
-import docx
 import os
-import pandas as pd
 import re
 import subprocess
 import tempfile
 from abc import ABC, abstractmethod
 from typing import List
+
+import docx
+import pandas as pd
 
 from .model import QuoteModel
 

@@ -1,7 +1,8 @@
-from MemeGenerator.engine import MemeEngine
-from tempfile import TemporaryDirectory
-import random
 import filecmp
+import random
+from tempfile import TemporaryDirectory
+
+from MemeGenerator.engine import MemeEngine
 
 
 def test_make_meme():

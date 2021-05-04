@@ -1,10 +1,10 @@
 """Meme generator engine module."""
-from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
-from QuoteEngine.model import QuoteModel
-
 import os
 import random
 import tempfile
+
+from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
+from QuoteEngine.model import QuoteModel
 
 
 class MemeEngine:

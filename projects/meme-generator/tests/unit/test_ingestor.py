@@ -1,9 +1,9 @@
-from QuoteEngine.ingestor import Ingestor
-from QuoteEngine.ingestor import InvalidFileFormat
-from QuoteEngine.model import QuoteModel
 from typing import List
 
 import pytest
+from QuoteEngine.ingestor import Ingestor
+from QuoteEngine.ingestor import InvalidFileFormat
+from QuoteEngine.model import QuoteModel
 
 
 class FakeIngestor:

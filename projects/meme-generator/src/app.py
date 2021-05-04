@@ -2,13 +2,13 @@
 import mimetypes
 import os
 import random
-import requests
 import tempfile
-from flask import Flask, render_template, request
-from MemeGenerator.engine import MemeEngine
-from QuoteEngine.ingestor import Ingestor
 from pathlib import Path
 
+import requests
+from MemeGenerator.engine import MemeEngine
+from QuoteEngine.ingestor import Ingestor
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 static = Path("./static")

@@ -1,4 +1,4 @@
-from QuoteEngine.ingestor import InvalidFileFormat
+import pytest
 from QuoteEngine.ingestor import (
     CsvIngestor,
     DocxIngestor,
@@ -6,9 +6,8 @@ from QuoteEngine.ingestor import (
     TxtIngestor,
     IngestorInterface,
 )
+from QuoteEngine.ingestor import InvalidFileFormat
 from QuoteEngine.model import QuoteModel
-
-import pytest
 
 ingestors_to_test = [
     ("csv", CsvIngestor),

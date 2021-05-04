@@ -1,16 +1,14 @@
-import os
-import tempfile
-from flask import Flask
-import pytest
-import random
-from flask.testing import FlaskClient
-from app import app as flask_app
-import re
-from os import PathLike
-import requests_mock
-import filecmp
 import operator
+import random
+import re
+import tempfile
+from os import PathLike
+
+import pytest
+import requests_mock
 from PIL import Image, ImageChops
+from app import app as flask_app
+from flask.testing import FlaskClient
 
 
 @pytest.fixture
