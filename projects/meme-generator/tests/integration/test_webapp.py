@@ -8,6 +8,7 @@ from app import app as flask_app
 import re
 from os import PathLike
 import requests_mock
+import filecmp
 
 
 @pytest.fixture
@@ -32,9 +33,9 @@ def check_meme_image(client: FlaskClient, html: str, expected_img_file: PathLike
     img_response = client.get(f"static/{img_name}")
     assert img_response.status_code == 200
     assert img_response.content_type == "image/jpeg"
-    with open(f"./tests/_data/{expected_img_file}", "rb") as f:
-        expected_content = f.read()
-        assert img_response.data == expected_content
+    with tempfile.NamedTemporaryFile(suffix=".jpg") as tf:
+        tf.write(img_response.data)
+        assert filecmp.cmp(tf.name, f"./tests/_data/{expected_img_file}", shallow=False)
 
 
 def test_homepage(client: FlaskClient):
