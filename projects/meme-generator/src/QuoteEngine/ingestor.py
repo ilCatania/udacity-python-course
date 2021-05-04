@@ -14,6 +14,7 @@ quote_regex = re.compile('"([^"]+)" - (.+)')
 
 class InvalidFileFormat(BaseException):
     """Raised when a file with the wrong extension is passed to an ingestor."""
+
     pass
 
 
@@ -35,7 +36,6 @@ class IngestorInterface(ABC):
         if not cls.can_ingest(path):
             raise InvalidFileFormat(path, cls)
         return cls._parse(path)
-
 
     @classmethod
     @abstractmethod
@@ -64,9 +64,9 @@ class CsvIngestor(IngestorInterface):
     @classmethod
     def _parse(cls, path) -> List[QuoteModel]:
         """Parsing logic."""
-        return pd.read_csv(path)\
-            .apply(lambda row: QuoteModel(row.body, row.author), axis=1)\
-            .tolist()
+        return (
+            pd.read_csv(path).apply(lambda row: QuoteModel(row.body, row.author), axis=1).tolist()
+        )
 
 
 class DocxIngestor(IngestorInterface):
@@ -78,9 +78,10 @@ class DocxIngestor(IngestorInterface):
     def _parse(cls, path) -> List[QuoteModel]:
         """Parsing logic."""
         doc = docx.Document(path)
-        return [QuoteModel(m[1], m[2])
-                for p in doc.paragraphs
-                for m in quote_regex.finditer(p.text)]
+        return [
+            QuoteModel(m[1], m[2]) for p in doc.paragraphs for m in quote_regex.finditer(p.text)
+        ]
+
 
 class PdfIngestor(IngestorInterface):
     """Parse PDF files using pdftotext via the command line."""
@@ -94,11 +95,12 @@ class PdfIngestor(IngestorInterface):
         try:
             subprocess.run(("pdftotext", path, tf), check=True)
             with open(tf, "r") as tf_handle:
-                return [QuoteModel(m[1], m[2])
-                        for line in tf_handle
-                        for m in quote_regex.finditer(line)]
+                return [
+                    QuoteModel(m[1], m[2]) for line in tf_handle for m in quote_regex.finditer(line)
+                ]
         finally:
             os.remove(tf)
+
 
 class Ingestor(IngestorInterface):
 
@@ -110,7 +112,7 @@ class Ingestor(IngestorInterface):
 
     @classmethod
     def _parse(cls, path) -> List[QuoteModel]:
-        for ing in cls._ingestors:  #type: IngestorInterface
+        for ing in cls._ingestors:  # type: IngestorInterface
             if ing.can_ingest(path):
                 return ing.parse(path)
         raise InvalidFileFormat

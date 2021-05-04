@@ -29,8 +29,9 @@ class MemeEngine:
 
         draw.text((text_x, text_y), str(quote), font=font)
 
-    def make_meme(self, img_path, text, author, width=500,
-                  font_name=default_font, font_size=default_font_size) -> str:
+    def make_meme(
+        self, img_path, text, author, width=500, font_name=default_font, font_size=default_font_size
+    ) -> str:
         try:
             Image.open(img_path)
         except:

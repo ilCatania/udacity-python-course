@@ -21,7 +21,7 @@ def client() -> FlaskClient:
 def get_html(response):
     """Extract the html from a flask response, as a string."""
     assert response.status_code == 200
-    assert response.content_type == 'text/html; charset=utf-8'
+    assert response.content_type == "text/html; charset=utf-8"
     return response.data.decode("utf-8")
 
 
@@ -57,9 +57,13 @@ def test_create(client: FlaskClient):
     external_img_url = "http://localhost/images/black.bmp"
     with requests_mock.Mocker() as m, open("./tests/_data/black.bmp", "rb") as f:
         m.get(external_img_url, headers={"content-type": "image/x-ms-bmp"}, body=f)
-        response = client.post("/create", data={
-            'image_url': external_img_url,
-            'body': "Veni, vidi, vici.",
-            'author': "Julius Caesar"})
+        response = client.post(
+            "/create",
+            data={
+                "image_url": external_img_url,
+                "body": "Veni, vidi, vici.",
+                "author": "Julius Caesar",
+            },
+        )
     html = get_html(response)
     check_meme_image(client, html, "expected_user_meme.jpg")

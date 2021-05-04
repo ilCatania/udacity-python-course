@@ -11,4 +11,3 @@ def test_make_meme():
         me = MemeEngine(d)
         actual = me.make_meme("./tests/_data/black.bmp", "Test quote.", "Test author")
         assert filecmp.cmp(actual, expected, shallow=False)
-

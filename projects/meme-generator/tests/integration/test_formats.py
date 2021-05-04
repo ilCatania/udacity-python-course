@@ -1,5 +1,11 @@
 from QuoteEngine.ingestor import InvalidFileFormat
-from QuoteEngine.ingestor import CsvIngestor, DocxIngestor, PdfIngestor, TxtIngestor, IngestorInterface
+from QuoteEngine.ingestor import (
+    CsvIngestor,
+    DocxIngestor,
+    PdfIngestor,
+    TxtIngestor,
+    IngestorInterface,
+)
 from QuoteEngine.model import QuoteModel
 
 import pytest
@@ -8,7 +14,7 @@ ingestors_to_test = [
     ("csv", CsvIngestor),
     ("docx", DocxIngestor),
     ("pdf", PdfIngestor),
-    ("txt", TxtIngestor)
+    ("txt", TxtIngestor),
 ]
 
 
