@@ -11,16 +11,16 @@ from QuoteEngine.ingestor import Ingestor
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
-static = Path("./static")
-meme = MemeEngine(static)  # this is pretty ugly but wouldn't work otherwise
+current_dir = Path(__file__).parent
+meme = MemeEngine(current_dir / "static")
 
 
 def setup():
     """Load all resources."""
     Ingestor.register_defaults()
-    quotes = Ingestor.scan("./_data/DogQuotes")
+    quotes = Ingestor.scan(current_dir / "_data/DogQuotes")
 
-    images_path = "./_data/photos/dog/"
+    images_path = current_dir / "_data/photos/dog/"
     imgs = [
         Path(dir) / f
         for dir, _, files in os.walk(images_path)
@@ -38,8 +38,7 @@ def meme_rand():
     """Generate a random meme."""
     img, quote = (random.choice(item) for item in (imgs, quotes))
     meme_path = meme.make_meme(img, quote.body, quote.author)
-    meme_file_name = static / os.path.basename(meme_path)  # assumes memes are saved under ./static/
-    return render_template("meme.html", path=meme_file_name)
+    return render_template("meme.html", path=Path(meme_path).relative_to(current_dir))
 
 
 @app.route("/create", methods=["GET"])
@@ -65,8 +64,7 @@ def meme_post():
     with tempfile.NamedTemporaryFile(suffix=extension) as tf:
         tf.write(response.content)
         meme_path = meme.make_meme(tf.name, body, author)
-    meme_file_name = static / os.path.basename(meme_path)  # assumes memes are saved under ./static/
-    return render_template("meme.html", path=meme_file_name)
+    return render_template("meme.html", path=Path(meme_path).relative_to(current_dir))
 
 
 if __name__ == "__main__":
