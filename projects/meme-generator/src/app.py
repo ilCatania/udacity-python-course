@@ -12,15 +12,15 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 static = Path("./static")
-meme = MemeEngine("./src/static")  # this is pretty ugly but wouldn't work otherwise
+meme = MemeEngine(static)  # this is pretty ugly but wouldn't work otherwise
 
 
 def setup():
     """Load all resources."""
     Ingestor.register_defaults()
-    quotes = Ingestor.scan("./src/_data/DogQuotes")
+    quotes = Ingestor.scan("./_data/DogQuotes")
 
-    images_path = "./src/_data/photos/dog/"
+    images_path = "./_data/photos/dog/"
     imgs = [
         Path(dir) / f
         for dir, _, files in os.walk(images_path)

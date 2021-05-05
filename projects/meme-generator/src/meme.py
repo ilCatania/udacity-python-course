@@ -15,7 +15,7 @@ def generate_meme(path=None, body=None, author=None):
     quote = None
 
     if path is None:
-        images = "./src/_data/photos/dog/"
+        images = "./_data/photos/dog/"
         imgs = []
         for root, dirs, files in os.walk(images):
             imgs = [os.path.join(root, name) for name in files]
@@ -26,7 +26,7 @@ def generate_meme(path=None, body=None, author=None):
 
     if body is None:
         Ingestor.register_defaults()
-        quotes = Ingestor.scan("./src/_data/DogQuotes")
+        quotes = Ingestor.scan("./_data/DogQuotes")
 
         quote = random.choice(quotes)
     else:
