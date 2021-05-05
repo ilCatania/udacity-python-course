@@ -2,6 +2,7 @@
 import os
 import random
 import tempfile
+from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
 from QuoteEngine.model import QuoteModel
@@ -49,3 +50,14 @@ class MemeEngine:
         except (FileNotFoundError, UnidentifiedImageError):
             raise ValueError(f"Unable to open: {os.path.abspath(img_path)}")
         return tf
+
+    @classmethod
+    def find_images(cls, path: os.PathLike, img_ext=".jpg"):
+        """Find and return pathnames for images in input folder, including subfolders."""
+        img_ext = img_ext.lower()
+        return [
+            Path(root) / f
+            for root, _, files in os.walk(path)
+            for f in files
+            if f.lower().endswith(img_ext)
+        ]

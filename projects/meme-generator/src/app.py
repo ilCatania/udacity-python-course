@@ -1,6 +1,5 @@
 """Web app module."""
 import mimetypes
-import os
 import random
 import tempfile
 from pathlib import Path
@@ -18,16 +17,9 @@ meme = MemeEngine(current_dir / "static")
 def setup():
     """Load all resources."""
     Ingestor.register_defaults()
-    quotes = Ingestor.scan(current_dir / "_data/DogQuotes")
-
-    images_path = current_dir / "_data/photos/dog/"
-    imgs = [
-        Path(dir) / f
-        for dir, _, files in os.walk(images_path)
-        for f in files
-        if f.lower().endswith(".jpg")
-    ]
-    return quotes, imgs
+    return Ingestor.scan(current_dir / "_data/DogQuotes"), MemeEngine.find_images(
+        current_dir / "_data/photos/dog/"
+    )
 
 
 quotes, imgs = setup()
