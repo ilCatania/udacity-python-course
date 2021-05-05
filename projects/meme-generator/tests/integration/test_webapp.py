@@ -47,8 +47,7 @@ def test_homepage(client: FlaskClient, monkeypatch):
     response = client.get("/")
     html = get_html(response)
     assert "<title>Meme Generator</title>" in html
-    # below check works locally but not in CI, and I have no idea why
-    # check_meme_image(client, html, "expected_homepage_meme.jpg")
+    check_meme_image(client, html, "expected_homepage_meme.jpg")
 
 
 def test_create(client: FlaskClient):
