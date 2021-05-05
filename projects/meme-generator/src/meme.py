@@ -2,11 +2,15 @@
 import argparse
 import os
 import random
+import tempfile
 from pathlib import Path
 
 from MemeGenerator.engine import MemeEngine
 from QuoteEngine.ingestor import Ingestor
 from QuoteEngine.model import QuoteModel
+
+
+current_dir = Path(__file__).parent
 
 
 def generate_meme(path=None, body=None, author=None):
@@ -15,7 +19,7 @@ def generate_meme(path=None, body=None, author=None):
     quote = None
 
     if path is None:
-        images = "./_data/photos/dog/"
+        images = current_dir / "_data/photos/dog/"
         imgs = []
         for root, dirs, files in os.walk(images):
             imgs = [os.path.join(root, name) for name in files]
@@ -26,7 +30,7 @@ def generate_meme(path=None, body=None, author=None):
 
     if body is None:
         Ingestor.register_defaults()
-        quotes = Ingestor.scan("./_data/DogQuotes")
+        quotes = Ingestor.scan(current_dir / "_data/DogQuotes")
 
         quote = random.choice(quotes)
     else:
@@ -34,7 +38,7 @@ def generate_meme(path=None, body=None, author=None):
             raise Exception("Author Required if Body is Used")
         quote = QuoteModel(body, author)
 
-    meme = MemeEngine("./tmp")
+    meme = MemeEngine(tempfile.mkdtemp(prefix="memes-"))
     path = meme.make_meme(img, quote.body, quote.author)
     return path
 
