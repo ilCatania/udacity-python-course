@@ -6,8 +6,7 @@ from QuoteEngine.ingestor import (
     TxtIngestor,
     IngestorInterface,
 )
-from QuoteEngine.ingestor import InvalidFileFormat
-from QuoteEngine.model import QuoteModel
+from QuoteEngine.model import QuoteModel, InvalidFileFormat
 
 ingestors_to_test = [
     ("csv", CsvIngestor),
