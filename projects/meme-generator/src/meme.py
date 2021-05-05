@@ -1,6 +1,5 @@
 """Command line meme generator module."""
 import argparse
-import os
 import random
 import tempfile
 from pathlib import Path
@@ -8,7 +7,6 @@ from pathlib import Path
 from MemeGenerator.engine import MemeEngine
 from QuoteEngine.ingestor import Ingestor
 from QuoteEngine.model import QuoteModel
-
 
 current_dir = Path(__file__).parent
 
